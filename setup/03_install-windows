@@ -1,0 +1,12 @@
+#!/bin/bash
+# https://wiki.archlinux.org/title/QEMU#Installing_the_operating_system
+
+INSTALL_DISK_PATH="$HOME/Downloads/Win11_22H2_English_x64v1.iso"
+IMAGE_DIRECTORY="$HOME/.local/lib/libvirt/images/"
+IMAGE_NAME="Windows.img"
+MEMORY="8G"
+
+qemu-system-x86_64 -boot order=d -enable-kvm \
+    -drive file=${IMAGE_DIRECTORY}/${IMAGE_NAME},format=raw \
+    -cdrom ${INSTALL_DISK_PATH} \
+    -m ${MEMORY}
