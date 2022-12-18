@@ -2,6 +2,8 @@
 
 This project is my series of steps for virtualizing Windows on my home PC, passing through my GPU and games drive to the guest VM.
 
+Inspiration for this project was taken from [joeknock90](https://github.com/joeknock90/Single-GPU-Passthrough). I'm using some of his scripts as a template, but mostly I'm using their README as a jumping off point.
+
 ## Relevant Environment Details
 
 ### Hardware Info
@@ -101,9 +103,25 @@ Kernel info from `uname -r`:
 6.0.6-76060006-generic
 ```
 
+## Project Setup
+
+To set up for this project, you need to have:
+
+- A downloaded Windows installation ISO
+
 ## Project Usage
 
-Each script is a step in the setup process, intended to be executed in numberical step order (01_, 02_, etc..) to go from zero to running a Windows VM guest and passing my GPU and games drive to it.
+## Setup
+
+Each script in the `setup` directory is a step in the setup process, intended to be executed in numberical step order (01_, 02_, etc..) to go from zero to running a Windows VM guest and passing my GPU and games drive to it.
+
+## Hooks
+
+Scripts in the `hooks` directory will be run every time the VM starts or stops. They are moved to the appropriate locations to accomplish this during the setup process.
+
+## Exec
+
+Scripts in the `exec` directory are used to start the VM itself.
 
 ## Contribution Format
 
