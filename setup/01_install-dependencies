@@ -1,0 +1,10 @@
+#!/bin/bash
+# 
+# This script will cover the install of any software used in the project
+#
+# Initial packages list pulled from step 4 of this Linux Shout article:
+#   https://www.how2shout.com/linux/how-to-install-qemu-kvm-on-ubuntu-22-04-20-04-lts/
+
+sudo apt-get -y install \
+    qemu-system-x86 bridge-utils virtinst \
+    libvirt-clients libvirt-daemon-system libvirt-daemon
