@@ -1,12 +1,30 @@
 #!/bin/bash
 # https://wiki.archlinux.org/title/QEMU#Installing_the_operating_system
+# https://wiki.archlinux.org/title/QEMU#Trusted_Platform_Module_emulation
+# https://www.qemu.org/docs/master/system/invocation.html
+# https://wiki.archlinux.org/title/QEMU#Booting_in_UEFI_mode
+# I had some issues with the system requirements, so I'm posting the Windows 11 system requirements:
+## https://support.microsoft.com/en-us/windows/windows-11-system-requirements-86c11283-ea52-4782-9efd-7674389a7ba3
 
 INSTALL_DISK_PATH="$HOME/Downloads/Win11_22H2_English_x64v1.iso"
 IMAGE_DIRECTORY="$HOME/.local/lib/libvirt/images/"
 IMAGE_NAME="Windows.img"
 MEMORY="8G"
+CPUS="8"
+TPM_DATA_DIR="/tmp/qemu_tpm.XXXX"
+TPM_SOCKET_NAME="swtpm-sock"
 
-qemu-system-x86_64 -boot order=d -enable-kvm \
+temp_data_dir=$(mktemp -d "${TPM_DATA_DIR}")
+swtpm socket --tpm2 --tpmstate dir=${temp_data_dir} --ctrl type=unixio,path=${temp_data_dir}/${TPM_SOCKET_NAME} &
+
+qemu-system-x86_64 -boot order=d -enable-kvm -bios /usr/share/ovmf/OVMF.fd \
+    -chardev socket,id=chrtpm,path=${temp_data_dir}/${TPM_SOCKET_NAME} \
+    -tpmdev emulator,id=tmp0,chardev=chrtpm -device tpm-tis,tpmdev=tmp0 \
     -drive file=${IMAGE_DIRECTORY}/${IMAGE_NAME},format=raw \
     -cdrom ${INSTALL_DISK_PATH} \
-    -m ${MEMORY}
+    -m ${MEMORY} -smp ${CPUS} &
+
+wait
+# Make sure the swtpm process is finished, it doesn't always seem to stop on its own when the machine powers down
+pkill --echo --parent $$ swtpm
+rm -r ${temp_data_dir}
