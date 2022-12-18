@@ -1,12 +1,26 @@
 #!/bin/bash
 # https://wiki.archlinux.org/title/QEMU#Installing_the_operating_system
+# https://wiki.archlinux.org/title/QEMU#Trusted_Platform_Module_emulation
+# https://www.qemu.org/docs/master/system/invocation.html
 
 INSTALL_DISK_PATH="$HOME/Downloads/Win11_22H2_English_x64v1.iso"
 IMAGE_DIRECTORY="$HOME/.local/lib/libvirt/images/"
 IMAGE_NAME="Windows.img"
 MEMORY="8G"
+TPM_DATA_DIR="/tmp/qemu_tpm.XXXX"
+TPM_SOCKET_NAME="swtpm-sock"
+
+temp_data_dir=$(mktemp -d "${TPM_DATA_DIR}")
+swtpm socket --tpm2 --tpmstate dir=${temp_data_dir} --ctrl type=unixio,path=${temp_data_dir}/${TPM_SOCKET_NAME} &
 
 qemu-system-x86_64 -boot order=d -enable-kvm \
+    -chardev socket,id=chrtpm,path=${temp_data_dir}/${TPM_SOCKET_NAME} \
+    -tpmdev emulator,id=tmp0,chardev=chrtpm -device tpm-tis,tpmdev=tmp0 \
     -drive file=${IMAGE_DIRECTORY}/${IMAGE_NAME},format=raw \
     -cdrom ${INSTALL_DISK_PATH} \
-    -m ${MEMORY}
+    -m ${MEMORY} &
+
+wait
+# Make sure the swtpm process is finished, it doesn't always seem to stop on its own when the machine powers down
+pkill --echo --parent $$ swtpm
+rm -r ${temp_data_dir}
