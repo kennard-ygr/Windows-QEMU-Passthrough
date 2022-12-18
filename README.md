@@ -2,7 +2,7 @@
 
 This project is my series of steps for virtualizing Windows on my home PC, passing through my GPU and games drive to the guest VM.
 
-Inspiration for this project was taken from [joeknock90](https://github.com/joeknock90/Single-GPU-Passthrough). I'm using some of his scripts as a template, but mostly I'm using their README as a jumping off point.
+Inspiration for this project was taken from [joeknock90](https://github.com/joeknock90/Single-GPU-Passthrough). I'm using some of their scripts as a template, but mostly I'm using their README as a jumping off point.
 
 ## Relevant Environment Details
 
