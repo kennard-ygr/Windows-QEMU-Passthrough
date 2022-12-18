@@ -1,0 +1,12 @@
+#!/bin/bash
+# https://wiki.archlinux.org/title/QEMU#Creating_a_hard_disk_image
+# https://www.qemu.org/docs/master/system/images.html
+
+IMAGE_SIZE="128G"
+IMAGE_FORMAT="raw"
+IMAGE_DIRECTORY="$HOME/.local/lib/libvirt/images/"
+IMAGE_NAME="Windows.img"
+
+mkdir -p $HOME/.local/lib/libvirt/images
+qemu-img create -f ${IMAGE_FORMAT} ${IMAGE_DIRECTORY}/${IMAGE_NAME} ${IMAGE_SIZE}
+qemu-img info ${IMAGE_DIRECTORY}/${IMAGE_NAME}
