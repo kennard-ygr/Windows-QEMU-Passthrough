@@ -8,5 +8,5 @@ IMAGE_DIRECTORY="$HOME/.local/lib/libvirt/images/"
 IMAGE_NAME="Windows.img"
 
 mkdir -p $HOME/.local/lib/libvirt/images
-qemu-img create -f ${IMAGE_FORMAT} -o preallocation=full ${IMAGE_DIRECTORY}/${IMAGE_NAME} ${IMAGE_SIZE}
+qemu-img create -f ${IMAGE_FORMAT} ${IMAGE_DIRECTORY}/${IMAGE_NAME} ${IMAGE_SIZE}
 qemu-img info ${IMAGE_DIRECTORY}/${IMAGE_NAME}
