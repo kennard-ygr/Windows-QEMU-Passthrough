@@ -91,16 +91,23 @@ Paraphrased from `lshw`...
 OS version info from `/etc/os-release`...
 
 ```text
-VERSION="22.04 LTS"
-ID_LIKE="ubuntu debian"
-PRETTY_NAME="Pop!_OS 22.04 LTS"
-VERSION_ID="22.04"
-VERSION_CODENAME=jammy
+NAME="Arch Linux"
+PRETTY_NAME="Arch Linux"
+ID=arch
+BUILD_ID=rolling
+ANSI_COLOR="38;2;23;147;209"
+HOME_URL="https://archlinux.org/"
+DOCUMENTATION_URL="https://wiki.archlinux.org/"
+SUPPORT_URL="https://bbs.archlinux.org/"
+BUG_REPORT_URL="https://bugs.archlinux.org/"
+PRIVACY_POLICY_URL="https://terms.archlinux.org/docs/privacy-policy/"
+LOGO=archlinux-logo
 ```
+
 Kernel info from `uname -r`:
 
 ```text
-6.0.6-76060006-generic
+6.1.4-arch1-1
 ```
 
 ## Project Setup
@@ -125,4 +132,4 @@ Scripts in the `exec` directory are used to start the VM itself.
 
 ## Contribution Format
 
-Major OS changes (moving from Pop!_OS to Arch, for example) will be represented by maintaining a new branch. Any sites where commands are gathered from will be cited in the script those commands are used in, to reference in the future.
+Major OS changes will be represented by maintaining a new branch. Any sites where commands are gathered from will be cited in the script those commands are used in, to reference in the future.
